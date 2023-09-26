@@ -78,6 +78,10 @@ class Connect4
     def valid_move
         @move.to_i.between?(1, 42)
     end
+
+    def switch_players(current_player)
+        @current_player = @current_player == @hades ? @hermes : @hades
+    end
 end
 
 game = Connect4.new
