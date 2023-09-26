@@ -1,9 +1,10 @@
 class Players
-    attr_accessor :name, :symbol, :move
+    attr_accessor :name, :symbol, :move, :count
     def initialize (name, symbol)
         @name = name
         @symbol = symbol
         @move = move
+        @count = 0
     end
 end
 
