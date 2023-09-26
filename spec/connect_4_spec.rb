@@ -21,4 +21,27 @@ describe Connect4 do
             expect(game.current_player).to eq(' ')
         end
     end
+
+    describe '#valid_move' do
+        context 'if a move is an integer in range' do
+            it 'returns true' do
+                game.instance_variable_set(:@move, "5")
+                expect(game.valid_move).to be(true)
+            end
+        end
+
+        context 'if a move is an integer out of range' do
+            it 'returns false' do
+                game.instance_variable_set(:@move, "43")
+                expect(game.valid_move).to be(false)
+            end
+        end
+
+        context 'if a move is a non-numeric value' do
+            it 'returns false' do
+                game.instance_variable_set(:@move, "a")
+                expect(game.valid_move).to be(false)
+            end
+        end
+    end
 end
