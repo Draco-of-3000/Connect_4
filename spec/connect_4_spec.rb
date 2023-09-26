@@ -118,4 +118,91 @@ describe Connect4 do
             end
         end
     end
+
+    describe '#check_winner' do
+        context 'when player1 wins horizontally' do
+            it 'returns true' do
+                game.instance_variable_set(:@board, [
+                    "1", "2", "3", "4", "5", "6", "7", 
+                    "8", "9", "10", "11", "12", "13", "14", 
+                    "15", "16", "\u{2620}", "\u{2620}", "\u{2620}", "\u{2620}", "21", 
+                    "22", "23", "24", "25", "26", "27", "28", 
+                    "29", "30", "31", "32", "33", "34", "35", 
+                    "36", "37", "38", "39", "40", "41", "42"]
+                )
+                expect(game.check_winner(player_one)).to be(true)
+            end
+        end
+
+        context 'when player2 wins horizontally' do
+            it 'returns true' do
+                game.instance_variable_set(:@board, [
+                    "1", "2", "3", "4", "5", "6", "7", 
+                    "8", "9", "10", "11", "12", "13", "14", 
+                    "15", "16", "\u{269A}", "\u{269A}", "\u{269A}", "\u{269A}", "21", 
+                    "22", "23", "24", "25", "26", "27", "28", 
+                    "29", "30", "31", "32", "33", "34", "35", 
+                    "36", "37", "38", "39", "40", "41", "42"]
+                )
+                expect(game.check_winner(player_two)).to be(true)
+            end
+        end
+
+        context 'when player1 wins vertically' do
+            it 'returns true' do
+                game.instance_variable_set(:@board, [
+                    "1", "2", "3", "4", "5", "6", "7", 
+                    "8", "9", "10", "11", "12", "13", "14", 
+                    "15", "16", "\u{2620}", "18", "19", "20", "21", 
+                    "22", "23", "\u{2620}", "25", "26", "27", "28", 
+                    "29", "30", "\u{2620}", "32", "33", "34", "35", 
+                    "36", "37", "\u{2620}", "39", "40", "41", "42"]
+                )
+                expect(game.check_winner(player_one)).to be(true)
+            end
+        end
+
+        context 'when player2 wins vertically' do
+            it 'returns true' do
+                game.instance_variable_set(:@board, [
+                    "1", "2", "3", "4", "5", "6", "7", 
+                    "8", "9", "10", "11", "12", "13", "14", 
+                    "15", "16", "\u{269A}", "18", "19", "20", "21", 
+                    "22", "23", "\u{269A}", "25", "26", "27", "28", 
+                    "29", "30", "\u{269A}", "32", "33", "34", "35", 
+                    "36", "37", "\u{269A}", "39", "40", "41", "42"]
+                )
+                expect(game.check_winner(player_two)).to be(true)
+            end
+            
+        end
+
+        context 'when player1 wins diagonally' do
+            it 'returns true' do
+                game.instance_variable_set(:@board, [
+                    "1", "2", "3", "4", "5", "6", "7", 
+                    "8", "9", "10", "11", "12", "13", "14", 
+                    "15", "16", "17", "\u{2620}", "19", "20", "21", 
+                    "22", "23", "24", "25", "\u{2620}", "27", "28", 
+                    "29", "30", "31", "32", "33", "\u{2620}", "35", 
+                    "36", "37", "38", "39", "40", "41", "\u{2620}"]
+                )
+                expect(game.check_winner(player_one)).to be(true)
+            end
+        end
+
+        context 'when player2 wins diagonally' do
+            it 'returns true' do
+                game.instance_variable_set(:@board, [
+                    "1", "2", "3", "4", "5", "6", "7", 
+                    "8", "9", "10", "11", "12", "13", "14", 
+                    "15", "16", "17", "\u{269A}", "19", "20", "21", 
+                    "22", "23", "24", "25", "\u{269A}", "27", "28", 
+                    "29", "30", "31", "32", "33", "\u{269A}", "35", 
+                    "36", "37", "38", "39", "40", "41", "\u{269A}"]
+                )
+                expect(game.check_winner(player_two)).to be(true)
+            end
+        end
+    end
 end
