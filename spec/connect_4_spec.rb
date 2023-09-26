@@ -98,4 +98,24 @@ describe Connect4 do
             end
         end
     end
+
+    describe '#switch_players' do
+        subject { game.instance_variable_get(:@current_player) }
+
+        context 'when current player is hades' do
+            before { game.instance_variable_set(:@current_player, "\u{2620}") }
+
+            it 'changes current player from hades to hermes' do
+                expect(game.switch_players(@current_player)).to eq("\u{269A}")
+            end
+        end
+
+        context 'when current player is hermes' do
+            before { game.instance_variable_set(:@current_player, "\u{269A}") }
+
+            it 'changes current player from hermes to hades' do
+                expect(game.switch_players(@current_player)).to eq("\u{2620}")
+            end
+        end
+    end
 end
