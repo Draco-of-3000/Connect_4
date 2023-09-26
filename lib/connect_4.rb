@@ -14,6 +14,8 @@ class Connect4
         @current_player = " "
         @move = move
         @count = 0
+        @hades = "\u{2620}"
+        @hermes = "\u{269A}"
     end
 
     def get_player_names
@@ -28,11 +30,14 @@ class Connect4
             player1_symbol = gets.chomp.upcase
         end
 
+        player1_symbol = (player1_symbol == 'hades') ? @hades : @hermes
+
+
         player_one = Players.new(@player1_name, player1_symbol)
 
         print "Player 2, please enter your name: "
         player2_name = gets.chomp
-        player2_symbol = player_one.symbol == "hades" ? "hermes" : "hades"
+        player2_symbol = player_one.symbol == @hades ? @hermes : @hades
         player_two = Players.new(@player2_name, player2_symbol)
         puts "\n"
         puts "Okay #{player_one.name}, you're up. Make a move."
