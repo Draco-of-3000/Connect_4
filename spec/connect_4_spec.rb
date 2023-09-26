@@ -49,7 +49,6 @@ describe Connect4 do
     describe '#update_board' do
         context 'when a move is taken' do
             before do
-                game.instance_variable_set(:@move, "1")
                 game.instance_variable_set(:@board, [
                     "\u{2620}", "2", "3", "4", "5", "6", "7", 
                     "8", "9", "10", "11", "12", "13", "14", 
@@ -57,7 +56,7 @@ describe Connect4 do
                     "22", "23", "24", "25", "26", "27", "28", 
                     "29", "30", "31", "32", "33", "34", "35", 
                     "36", "37", "38", "39", "40", "41", "42"])
-                game.update_board(@move, player_one, player_two)
+                game.update_board(1 , player_one, player_two)
             end
 
             it 'does not update the board when the move is taken' do
@@ -70,6 +69,32 @@ describe Connect4 do
                     "29", "30", "31", "32", "33", "34", "35", 
                     "36", "37", "38", "39", "40", "41", "42"]
                 )
+            end
+        end
+
+        context 'when a move is not taken' do
+            before do
+                game.instance_variable_set(:@board, [
+                    "\u{2620}", "\u{269A}", "3", "4", "5", "6", "7", 
+                    "8", "9", "10", "11", "12", "13", "14", 
+                    "15", "16", "17", "18", "19", "20", "21", 
+                    "22", "23", "24", "25", "26", "27", "28", 
+                    "29", "30", "31", "32", "33", "34", "35", 
+                    "36", "37", "38", "39", "40", "41", "42"])
+                game.update_board(1 , player_one, player_two)
+            end
+
+            it 'updates the board correctly' do
+                updated_board = game.instance_variable_get(:@board)
+                expect(updated_board).to eq([
+                    "\u{2620}", "\u{269A}", "3", "4", "5", "6", "7", 
+                    "8", "9", "10", "11", "12", "13", "14", 
+                    "15", "16", "17", "18", "19", "20", "21", 
+                    "22", "23", "24", "25", "26", "27", "28", 
+                    "29", "30", "31", "32", "33", "34", "35", 
+                    "36", "37", "38", "39", "40", "41", "42"]
+                )
+                game.update_board(2 , player_one, player_two)
             end
         end
     end
