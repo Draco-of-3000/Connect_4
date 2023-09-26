@@ -1,8 +1,9 @@
 class Players
-    attr_accessor :name, :symbol
+    attr_accessor :name, :symbol, :move
     def initialize (name, symbol)
         @name = name
         @symbol = symbol
+        @move = move
     end
 end
 
@@ -57,6 +58,10 @@ class Connect4
 
     def seperator
         "-----+-----+-----+-----+-----+-----+------"
+    end
+
+    def valid_move
+        @move.to_i.between?(1, 42)
     end
 end
 
