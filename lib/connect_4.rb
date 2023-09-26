@@ -1,19 +1,19 @@
 class Players
-    attr_accessor :name, :symbol, :move, :count
+    attr_accessor :name, :symbol
     def initialize (name, symbol)
         @name = name
         @symbol = symbol
-        @move = move
-        @count = 0
     end
 end
 
 class Connect4
-    attr_accessor :board, :current_player
+    attr_accessor :board, :current_player, :move, :count
 
     def initialize
         @board = (1..42).to_a.map(&:to_s)
         @current_player = " "
+        @move = move
+        @count = 0
     end
 
     def get_player_names
@@ -56,6 +56,9 @@ class Connect4
         puts seperator
         puts "\n"
     end
+
+    def update_board
+        if @
 
     def seperator
         "-----+-----+-----+-----+-----+-----+------"
