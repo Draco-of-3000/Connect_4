@@ -23,9 +23,9 @@ class Connect4
         print "Player 1, please enter your name: "
         player1_name = gets.chomp
         puts "Are you team Hades or team Hermes #{@player1_name}? Please type Hades or Hermes"
-        player1_symbol = gets.chomp.upcase
+        player1_symbol = gets.chomp.downcase
 
-        until player1_symbol == "hades" || symbol1 == "hermes"
+        until player1_symbol == "hades" || player1_symbol == "hermes"
             puts "Invalid symbol. Please enter 'Hades' or 'Hermes':"
             player1_symbol = gets.chomp.upcase
         end
@@ -33,12 +33,12 @@ class Connect4
         player1_symbol = (player1_symbol == 'hades') ? @hades : @hermes
 
 
-        player_one = Players.new(@player1_name, player1_symbol)
+        player_one = Players.new(player1_name, player1_symbol)
 
         print "Player 2, please enter your name: "
         player2_name = gets.chomp
         player2_symbol = player_one.symbol == @hades ? @hermes : @hades
-        player_two = Players.new(@player2_name, player2_symbol)
+        player_two = Players.new(player2_name, player2_symbol)
         puts "\n"
         puts "Okay #{player_one.name}, you're up. Make a move."
         display_board
@@ -47,17 +47,17 @@ class Connect4
 
     def display_board
         puts seperator
-        puts "|  #{@board[0]}  |  #{@board[1]}  |  #{@board[2]}  |  #{@board[3]}  |  #{@board[4]}  |  #{@board[5]}  |  #{@board[6]} |"
+        puts "|   #{@board[0]}   |   #{@board[1]}   |   #{@board[2]}   |   #{@board[3]}   |   #{@board[4]}   |   #{@board[5]}   |   #{@board[6]}   |"
         puts seperator
-        puts "|  #{@board[7]}  |  #{@board[8]}  | #{@board[9]}  | #{@board[10]}  | #{@board[11]}  | #{@board[12]}  | #{@board[13]} |"
+        puts "|   #{@board[7]}   |   #{@board[8]}   |  #{@board[9]}   |   #{@board[10]}  |   #{@board[11]}    |  #{@board[12]}   |   #{@board[13]}   |"
         puts seperator
-        puts "| #{@board[14]}  | #{@board[15]}  | #{@board[16]}  | #{@board[17]}  | #{@board[18]}  | #{@board[19]}  | #{@board[20]} |"
+        puts "|   #{@board[14]}   |   #{@board[15]}   |   #{@board[16]}  |   #{@board[17]}  |   #{@board[18]}   |   #{@board[19]}   |   #{@board[20]}   |"
         puts seperator
-        puts "| #{@board[21]}  | #{@board[22]}  | #{@board[23]}  | #{@board[24]}  | #{@board[25]}  | #{@board[26]}  | #{@board[27]} |"
+        puts "|   #{@board[21]}   |   #{@board[22]}   |   #{@board[23]}  |   #{@board[24]}  |   #{@board[25]}   |   #{@board[26]}   |   #{@board[27]}   |"
         puts seperator
-        puts "| #{@board[28]}  | #{@board[29]}  | #{@board[30]}  | #{@board[31]}  | #{@board[32]}  | #{@board[33]}  | #{@board[34]} |"
+        puts "|   #{@board[28]}   |   #{@board[29]}   |   #{@board[30]}  |   #{@board[31]}  |   #{@board[32]}   |   #{@board[33]}   |   #{@board[34]}   |"
         puts seperator
-        puts "| #{@board[35]}  | #{@board[36]}  | #{@board[37]}  | #{@board[38]}  | #{@board[39]}  | #{@board[40]}  | #{@board[41]} |"
+        puts "|   #{@board[35]}   |   #{@board[36]}   |   #{@board[37]}  |   #{@board[38]}  |   #{@board[39]}   |   #{@board[40]}   |   #{@board[41]}   |"
         puts seperator
         puts "\n"
     end
@@ -72,11 +72,64 @@ class Connect4
     end
 
     def seperator
-        "-----+-----+-----+-----+-----+-----+------"
+        "-----+-----+-----+-----+-----+-----+------+------+-------"
     end
 
-    def valid_move
-        @move.to_i.between?(1, 42)
+    def make_move(player_one, player_two)
+        while @count < 42
+            if (@count == 41) && (!check_winner(player_one) || !check_winner(player_two))
+                puts "It's a tie!"
+                return
+            end
+            
+            puts "Pick a number from the board #{player_one.name}"
+            move = gets.chomp.to_i - 1
+
+            if !valid_move(move)
+                puts "Invalid input. Please enter a number between 1 and 42."
+                next
+            end
+
+            update_board(move, player_one, player_two)
+            @board[move] = player_one.symbol
+            @count += 1
+            display_board
+            if check_winner(player_one)
+                puts "#{player_one.name} wins!"
+                return
+            end
+
+            if valid_move(move)
+                switch_players(@current_player)
+            end 
+
+            puts "Pick a number from the grid above #{player_two.name}"
+            move = gets.chomp.to_i - 1
+
+            if !valid_move(move)
+                puts "Invalid input. Please enter a number between 1 and 42."
+                next
+            end
+
+            update_board(move, player_one, player_two)
+            @board[move] = player_two.symbol
+            @count += 1
+            display_board
+            if check_winner(player_two)
+                puts "#{player_two.name} wins!"
+                return
+            end
+            switch_players(@current_player)
+
+            if (@count == 41) && (!check_winner(player_one) || !check_winner(player_two))
+                puts "It's a tie!"
+                return
+            end
+        end
+    end
+
+    def valid_move(move)
+        move.to_i.between?(0, 41)
     end
 
     def switch_players(current_player)
@@ -122,6 +175,3 @@ class Connect4
         false
     end
 end
-
-game = Connect4.new
-game.display_board
