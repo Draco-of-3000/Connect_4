@@ -205,4 +205,42 @@ describe Connect4 do
             end
         end
     end
+
+    describe '#make_move' do 
+        context 'when game ends in a tie' do
+            before do
+                game.instance_variable_set(:@count, 42)
+                game.instance_variable_set(:@board, [
+                    "\u{2620}", "\u{269A}", "\u{2620}", "\u{269A}", "\u{2620}", "\u{269A}", "\u{2620}",
+                    "\u{269A}", "\u{2620}", "\u{269A}", "\u{2620}", "\u{269A}", "\u{2620}", "\u{269A}",
+                    "\u{2620}", "\u{269A}", "\u{2620}", "\u{269A}", "\u{2620}", "\u{269A}", "\u{2620}",
+                    "\u{269A}", "\u{2620}", "\u{269A}", "\u{2620}", "\u{269A}", "\u{2620}", "\u{269A}",
+                    "\u{2620}", "\u{269A}", "\u{2620}", "\u{269A}", "\u{2620}", "\u{269A}", "\u{2620}",
+                    "\u{269A}", "\u{2620}", "\u{269A}", "\u{2620}", "\u{269A}", "\u{2620}", "\u{269A}"
+                  ]
+                )
+            end
+            
+            it 'displays "It\'s a tie"' do
+                expect { game.make_move(player_one, player_two) }.to output("It's a tie!\n").to_stdout
+            end
+        end
+
+        context 'when an out of bounds move is made' do
+            it 'returns false' do
+                game.instance_variable_set(:@board, [
+                    "1", "2", "3", "4", "5", "6", "7", 
+                    "8", "9", "10", "11", "12", "13", "14", 
+                    "15", "16", "17", "18", "19", "20", "21", 
+                    "22", "23", "24", "25", "26", "27", "28", 
+                    "29", "30", "31", "32", "33", "34", "35", 
+                    "36", "37", "38", "39", "40", "41", "42"]
+                )
+
+                move = 43
+                result = game.valid_move(move)
+                expect(result).to be(false)
+            end
+        end
+    end
 end
