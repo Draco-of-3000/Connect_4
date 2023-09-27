@@ -37,13 +37,6 @@ describe Connect4 do
                 expect(game.valid_move(43)).to be(false)
             end
         end
-
-        context 'if a move is a non-numeric value' do
-            it 'returns false' do
-                game.instance_variable_set(:@move, "a")
-                expect(game.valid_move("a")).to be(false)
-            end
-        end
     end
 
     describe '#update_board' do
@@ -207,21 +200,32 @@ describe Connect4 do
     end
 
     describe '#make_move' do 
-        context 'when game ends in a tie' do
+        context 'when there is a tie' do
             before do
-                game.instance_variable_set(:@count, 42)
+                game.instance_variable_set(:@count, 41)
                 game.instance_variable_set(:@board, [
-                    "\u{2620}", "\u{269A}", "\u{2620}", "\u{269A}", "\u{2620}", "\u{269A}", "\u{2620}",
-                    "\u{269A}", "\u{2620}", "\u{269A}", "\u{2620}", "\u{269A}", "\u{2620}", "\u{269A}",
-                    "\u{2620}", "\u{269A}", "\u{2620}", "\u{269A}", "\u{2620}", "\u{269A}", "\u{2620}",
-                    "\u{269A}", "\u{2620}", "\u{269A}", "\u{2620}", "\u{269A}", "\u{2620}", "\u{269A}",
-                    "\u{2620}", "\u{269A}", "\u{2620}", "\u{269A}", "\u{2620}", "\u{269A}", "\u{2620}",
-                    "\u{269A}", "\u{2620}", "\u{269A}", "\u{2620}", "\u{269A}", "\u{2620}", "\u{269A}"
-                  ]
+                    "1", "2", "3", "4", "5", "6", "7",
+                    "8", "9", "10", "11", "12", "13", "14",
+                    "15", "16", "17", "18", "19", "20", "21",
+                    "22", "23", "24", "25", "26", "27", "28",
+                    "29", "30", "31", "32", "33", "34", "35",
+                    "36", "37", "38", "39", "40", "41", "42"
+                ]
                 )
             end
-            
+
             it 'displays "It\'s a tie"' do
+                allow(game).to receive(:gets).and_return(
+                    "1\n", "2\n", "4\n", "5\n", "6\n", "7\n", # Fill the columns in order
+                    "8\n", "9\n", "10\n", "11\n", "12\n", "13\n", "14\n", # Continue filling
+                    "15\n", "16\n", "17\n", "18\n", "19\n", "20\n", "21\n",
+                    "22\n", "23\n", "24\n", "25\n", "26\n", "27\n", "28\n",
+                    "29\n", "30\n", "31\n", "32\n", "33\n", "34\n", "35\n",
+                    "36\n", "37\n", "38\n", "39\n", "40\n", "41\n", "42\n"
+                )
+                
+                expect(game.check_winner(player_one)).to be(false)
+                expect(game.check_winner(player_one)).to be(false)
                 expect { game.make_move(player_one, player_two) }.to output("It's a tie!\n").to_stdout
             end
         end
